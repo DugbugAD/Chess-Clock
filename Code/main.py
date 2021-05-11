@@ -361,7 +361,7 @@ class MainWindow(QWidget):
     def info(self):
         d = QDialog()
         d.setFixedSize(700, 700)
-        with open('README.md', 'r') as file:
+        with open('README.txt', 'r') as file:
             lbl = QLabel(d, text=file.read())
             lbl.setFont(QFont('Courier New', 14))
         l = QVBoxLayout(d)
