@@ -20,6 +20,8 @@ from PyQt5.Qt import Qt
 import threading
 from playsound import playsound
 import functools
+import os
+
 
 class TimeConversion():
 
@@ -194,13 +196,12 @@ class Clock(QWidget):
             self.low_time = 20
 
     def play_sound(self):
-        playsound('/Users/adityaprakash/Documents/Python Projects/PyQt/Chess Clock/time_out.mp3'.replace(
-            " ", "%20"))
+        playsound(f'{os.getcwd()}/time_out.mp3'.replace(" ", "%20"))
 
     def low_time_warning(self):
         self.counter = 0
         threading.Thread(target=functools.partial(lambda: playsound(
-            '/Users/adityaprakash/Documents/Python Projects/PyQt/Chess Clock/low_time.mp3'.replace(" ", "%20")))).start()
+            f'{os.getcwd()}/low_time.mp3'.replace(" ", "%20")))).start()
 
         def f():
             if self.counter > 11:
@@ -256,9 +257,9 @@ class MainWindow(QWidget):
     def GUI(self):
         self.layout = QGridLayout(self)
         self.font = QFont("Courier", 48)
-        self.wclock = Clock(color='W', hr=0, min=0, sec=10, increment=5)
+        self.wclock = Clock(color='W', hr=0, min=10, sec=0, increment=5)
         self.layout.addWidget(self.wclock, 0, 0)
-        self.bclock = Clock(color='B', hr=0, min=0, sec=10, increment=5)
+        self.bclock = Clock(color='B', hr=0, min=10, sec=0, increment=5)
         self.layout.addWidget(self.bclock, 0, 1)
 
         self.frm = QFrame(self)
@@ -361,7 +362,7 @@ class MainWindow(QWidget):
     def info(self):
         d = QDialog()
         d.setFixedSize(700, 700)
-        with open('README.txt', 'r') as file:
+        with open('README.md', 'r') as file:
             lbl = QLabel(d, text=file.read())
             lbl.setFont(QFont('Courier New', 14))
         l = QVBoxLayout(d)
@@ -424,8 +425,6 @@ class MainWindow(QWidget):
         if (self.start.text() == 'START') or (self.wclock.total_seconds == 0) or (self.bclock.total_seconds == 0):
             return
         if self.pause.text() == 'PAUSE':
-            self.start.setEnabled(False)
-            self.switch.setEnabled(False)
             try:
                 self.wclock.stop()
                 self.bclock.stop()
@@ -434,8 +433,6 @@ class MainWindow(QWidget):
 
             self.pause.setText('RESUME')
         else:
-            self.start.setEnabled(True)
-            self.switch.setEnabled(True)
             if self.current_move == 'W':
                 self.wclock.decrease()
 
@@ -446,9 +443,6 @@ class MainWindow(QWidget):
     def change_time(self):
         self.start.setText('START')
         self.pause.setText('PAUSE')
-        self.start.setEnabled(True)
-        self.pause.setEnabled(False)
-        self.switch.setEnabled(False)
         self.wclock.unhighlight()
         self.bclock.unhighlight()
         self.wclock.change_time(
