@@ -33,7 +33,7 @@ Once a player runs out of time, a bell sound will occur and the clock will turn 
 <br>
 A time control is represented by A+B, where A is the number of minutes to start, and B is the 'bonus' increment per move.
 For instance, 10+5, a popular rapid time control, starts with 10 minutes on the clock and a 5-second increment added to your time after each move.
-We provide quick, one-tap access to some of the most popular online time controls:
+We provide quick, one-tap access to some of the most popular online time controls:\n
 1+0   | Bullet <br>
 2+1   | Bullet <br>
 3+0   | Blitz <br>
